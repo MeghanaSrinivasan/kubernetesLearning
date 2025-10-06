@@ -1,0 +1,11 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/vlalpha4
+name: dev-Cluster
+nodes:
+- role: control-plane #master-node
+  extraPortMappings:
+  - containerPort: 30001 #master container port
+    hostPort: 30001 #localhost port
+    protocol: TCP
+- role: worker
+- role: worker    

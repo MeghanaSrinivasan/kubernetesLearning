@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-shell-args
+spec:
+  restartPolicy: Never
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    args: 
+    - "/bin/sh"
+    - "-c"
+    - "echo This is my path: $PATH"

@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+  labels:
+    dept: dept-1
+    team: team-a
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-2
+  labels:
+    dept: dept-1
+    team: team-b 
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-3
+  labels:
+    dept: dept-2
+    team: team-a  
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+
+#you can add queries in the cmd as shown in below e.g:
+#kubectl get pod -l dept=dept-1
+#kubectl get pod -l team!=team-a
+#kubectl get pod -l dept=dept-1, team=team-a

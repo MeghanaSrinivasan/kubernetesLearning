@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-image-pull-backOff
+spec:
+  containers:
+  - name: nginx
+    image: nginx:abcd123456NotFound
