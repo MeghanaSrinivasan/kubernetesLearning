@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-startupprobes-tcpconnection
+spec:
+  containers:
+  - name: mongo
+    image: mongo
+    startupProbe:
+      tcpSocket:
+        port: 27017
+      periodSeconds: 1
+      failureThreshold: 5
+
+
+# Unlike httpGet probes (which expect an HTTP response), tcpSocket probes are simpler:
+
+# Kubernetes tries to open a TCP connection to the given port.
+
+# If it connects successfully → probe passes 
+
+# If the connection fails or times out → probe fails 

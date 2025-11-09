@@ -1,0 +1,40 @@
+# vinsdocker/k8s-probe-demo uses nginx
+# nginx will start after 10 seconds
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-livenessprobe
+spec:
+  terminationGracePeriodSeconds: 1
+  containers:
+  - name: probe-demo
+    image: vinsdocker/k8s-probe-demo
+    startupProbe:
+      httpGet:
+        path: /
+        port: 80
+      periodSeconds: 1
+      failureThreshold: 30
+    livenessProbe:
+      httpGet:
+        path: /live.html
+        port: 80
+      periodSeconds: 1
+      failureThreshold: 3      
+
+#       Kubernetes will send an HTTP GET request to / on port 80 every second.
+
+# It allows up to 30 consecutive failures (so, 30 seconds) before declaring the container as failed.
+
+# Since the app starts in ~10 seconds, the startup probe should pass successfully.
+
+# During this time, livenessProbe is disabled — preventing early restarts.
+
+# ✅ Once the startup probe succeeds once, Kubernetes marks the container as “started,” and enables liveness checks.
+
+
+# Once startup is complete, this probe runs every 1 second.
+
+# If /live.html returns a non-200 response or the request fails 3 times in a row, Kubernetes restarts the container.
+
+# This ensures the app remains healthy over time.

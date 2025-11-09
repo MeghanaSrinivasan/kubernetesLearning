@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-startupprobes
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    startupProbe:
+      httpGet:
+        path: / #path = the URL path inside your container that Kubernetes calls.
+        port: 80
+      periodSeconds: 1
+      failureThreshold: 3
+
+# A Startup Probe is used to check whether the application inside a container has successfully started.
+
+# Configuration details:
+
+# httpGet: Kubernetes will perform an HTTP GET request to http://<pod_ip>:80/.
+
+# periodSeconds: 1: It will check every 1 second.
+
+# failureThreshold: 3: If it fails 3 times in a row, the container is considered failed and is restarted.

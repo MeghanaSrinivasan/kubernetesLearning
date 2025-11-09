@@ -1,0 +1,42 @@
+# prefer httpGet / tcpSocket
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    startupProbe:
+      exec:
+        command:
+        - "cat"
+        - "/usr/share/nginx/html/index.html"
+      periodSeconds: 1
+      failureThreshold: 3
+
+# create a separate healthcheck
+# /bin/healthcheck
+
+      # exec:
+      #   command:
+      #   - "/bin/healthcheck"
+
+# What this does
+
+# The probe type is exec, meaning Kubernetes will execute a command inside the running container.
+
+# In this case, it runs:
+
+# cat /usr/share/nginx/html/index.html
+
+
+# If this command returns exit code 0 (success) → the probe passes ✅
+
+# If it returns non-zero (e.g. file missing, command fails) → probe fails ❌
+
+# Kubernetes retries every 1 second, up to 3 consecutive failures (failureThreshold: 3) before restarting the container.
+
+# So, your startup probe checks:
+
+# “Does the file /usr/share/nginx/html/index.html exist and can be read?”
